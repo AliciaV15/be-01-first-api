@@ -5,7 +5,7 @@ app = FastAPI(
     description="This is the first API for my Backend AI Internship at FlyRank.",
 )
 
-tasks = [
+initial_tasks  = [
     {
         "id": 1,
         "title": "Learn FastAPI",
@@ -23,6 +23,8 @@ tasks = [
     }
 ]
 
+tasks = initial_tasks.copy()
+
 @app.get("/")
 def root():
     return {
@@ -31,6 +33,36 @@ def root():
         "endpoints": ["/tasks"]
     }
 
+#EXTRAS  
+@app.get("/tasks/done")
+def get_done_tasks(done: bool):
+    filtered_tasks = [task for task in tasks if task["done"] == done]
+    return filtered_tasks
+
+@app.get("/tasks/search")
+def search_tasks(title: str):
+    filtered_tasks = [task for task in tasks if title.lower() in task["title"].lower()]
+    return filtered_tasks
+
+@app.get("/stats")
+def get_stats():
+    total_tasks = len(tasks)
+    completed_tasks = len([task for task in tasks if task["done"]])
+    pending_tasks = total_tasks - completed_tasks
+    
+    return {
+        "total_tasks": total_tasks,
+        "completed_tasks": completed_tasks,
+        "pending_tasks": pending_tasks
+    }
+
+@app.post("/reset")
+def reset_tasks():
+    global tasks
+    tasks = [task.copy() for task in initial_tasks]
+    return {"message": "Tasks have been reset to the initial state."}
+
+#CRUD
 @app.get("/tasks")
 def get_tasks():
     return tasks
@@ -103,6 +135,11 @@ def delete_task(task_id: int):
         detail={"error": f"Task {task_id} not found"}
     )
     
+#EXTRAS
+
+
+
+
 @app.get("/health")
 def health():
     return {
