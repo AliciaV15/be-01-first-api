@@ -45,6 +45,25 @@ def get_task(task_id: int):
         )
     return task
 
+@app.post("/tasks", status_code=status.HTTP_201_CREATED)
+def create_task(task: dict):
+    title = task.get("title")
+    
+    if not title or not title.strip():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, 
+            detail={"error": "Title is required"}
+        )
+    
+    new_task = {
+        "id": len(tasks) + 1,
+        "title": title,
+        "done": False
+    }
+    
+    tasks.append(new_task)
+    return new_task
+
 @app.get("/health")
 def health():
     return {
