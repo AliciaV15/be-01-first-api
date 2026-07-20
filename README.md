@@ -109,20 +109,6 @@ HTTP/1.1 201 Created
 
 ---
 
-## Swagger UI
-
-> Add a screenshot of `/docs` here.
-
-Example:
-
-```
-docs/swagger.png
-```
-
-or simply paste the screenshot below this section.
-
----
-
 ## Data Persistence
 
 This project intentionally stores data only in memory.
