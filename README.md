@@ -19,7 +19,7 @@ It implements a REST API for managing a to-do list using FastAPI. The applicatio
 Clone the repository:
 
 ```bash
-git clone https://github.com/AliciaV15/be-01-task-api.git
+git clone https://github.com/AliciaV15/be-01-first-api.git
 cd be-01-task-api
 ```
 
